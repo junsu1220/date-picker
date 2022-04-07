@@ -1,28 +1,28 @@
 class DatePicker {
   monthData = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   #calendarDate = {
-    data: "",
+    data: '',
     date: 0,
     month: 0,
     year: 0,
   };
 
   selectedDate = {
-    data: "",
+    data: '',
     date: 0,
     month: 0,
     year: 0,
@@ -59,31 +59,31 @@ class DatePicker {
   }
 
   assignElement() {
-    this.datePickerEl = document.getElementById("date-picker");
-    this.dateInputEl = this.datePickerEl.querySelector("#date-input");
-    this.calendarEl = this.datePickerEl.querySelector("#calendar");
-    this.calendarMonthEl = this.calendarEl.querySelector("#month");
-    this.monthContentEl = this.calendarEl.querySelector("#content");
-    this.nextBtnEl = this.calendarEl.querySelector("#next");
-    this.prevBtnEl = this.calendarEl.querySelector("#prev");
-    this.calendarDatesEl = this.calendarEl.querySelector("#dates");
+    this.datePickerEl = document.getElementById('date-picker');
+    this.dateInputEl = this.datePickerEl.querySelector('#date-input');
+    this.calendarEl = this.datePickerEl.querySelector('#calendar');
+    this.calendarMonthEl = this.calendarEl.querySelector('#month');
+    this.monthContentEl = this.calendarEl.querySelector('#content');
+    this.nextBtnEl = this.calendarEl.querySelector('#next');
+    this.prevBtnEl = this.calendarEl.querySelector('#prev');
+    this.calendarDatesEl = this.calendarEl.querySelector('#dates');
   }
 
   addEvent() {
-    this.dateInputEl.addEventListener("click", this.toggleCalendar.bind(this));
-    this.nextBtnEl.addEventListener("click", this.moveToNextMonth.bind(this));
-    this.prevBtnEl.addEventListener("click", this.moveToPrevMonth.bind(this));
+    this.dateInputEl.addEventListener('click', this.toggleCalendar.bind(this));
+    this.nextBtnEl.addEventListener('click', this.moveToNextMonth.bind(this));
+    this.prevBtnEl.addEventListener('click', this.moveToPrevMonth.bind(this));
     this.calendarDatesEl.addEventListener(
-      "click",
-      this.onClickSelectDate.bind(this)
+      'click',
+      this.onClickSelectDate.bind(this),
     );
   }
 
   toggleCalendar() {
-    if (this.calendarEl.classList.contains("active")) {
+    if (this.calendarEl.classList.contains('active')) {
       this.#calendarDate = { ...this.selectedDate };
     }
-    this.calendarEl.classList.toggle("active");
+    this.calendarEl.classList.toggle('active');
     this.updateMonth();
     this.updateDates();
   }
@@ -95,16 +95,16 @@ class DatePicker {
   }
 
   updateDates() {
-    this.calendarDatesEl.innerHTML = "";
+    this.calendarDatesEl.innerHTML = '';
     const numberOfDates = new Date(
       this.#calendarDate.year,
       this.#calendarDate.month + 1,
-      0
+      0,
     ).getDate();
     const fragment = new DocumentFragment();
     for (let i = 0; i < numberOfDates; i++) {
-      const dateEl = document.createElement("div");
-      dateEl.classList.add("date");
+      const dateEl = document.createElement('div');
+      dateEl.classList.add('date');
       dateEl.textContent = i + 1;
       dateEl.dataset.date = i + 1;
       fragment.appendChild(dateEl);
@@ -124,10 +124,10 @@ class DatePicker {
       `.date:nth-child(7n+${
         7 -
         new Date(this.#calendarDate.year, this.#calendarDate.month, 1).getDay()
-      })`
+      })`,
     );
     for (let i = 0; i < saturdayEls.length; i++) {
-      saturdayEls[i].style.color = "blue";
+      saturdayEls[i].style.color = 'blue';
     }
   }
 
@@ -138,13 +138,13 @@ class DatePicker {
           new Date(
             this.#calendarDate.year,
             this.#calendarDate.month,
-            1
+            1,
           ).getDay()) %
         7
-      })`
+      })`,
     );
     for (let i = 0; i < sundayEls.length; i++) {
-      sundayEls[i].style.color = "red";
+      sundayEls[i].style.color = 'red';
     }
   }
 
@@ -159,7 +159,7 @@ class DatePicker {
     ) {
       this.calendarDatesEl
         .querySelector(`[data-date='${today}']`)
-        .classList.add("today");
+        .classList.add('today');
     }
   }
 
@@ -187,21 +187,21 @@ class DatePicker {
     const eventTarget = event.target;
     if (eventTarget.dataset.date) {
       this.calendarDatesEl
-        .querySelector(".selected")
-        ?.classList.remove("selected");
-      eventTarget.classList.add("selected");
+        .querySelector('.selected')
+        ?.classList.remove('selected');
+      eventTarget.classList.add('selected');
       this.selectedDate = {
         data: new Date(
           this.#calendarDate.year,
           this.#calendarDate.month,
-          eventTarget.dataset.date
+          eventTarget.dataset.date,
         ),
         year: this.#calendarDate.year,
         month: this.#calendarDate.month,
         date: eventTarget.dataset.date,
       };
       this.setDateInput();
-      this.calendarEl.classList.remove("active");
+      this.calendarEl.classList.remove('active');
     }
   }
 
@@ -236,7 +236,7 @@ class DatePicker {
     ) {
       this.calendarDatesEl
         .querySelector(`[data-date='${this.selectedDate.date}']`)
-        .classList.add("selected");
+        .classList.add('selected');
     }
   }
 }
